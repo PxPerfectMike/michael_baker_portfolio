@@ -20,7 +20,7 @@ body {
 }
 
 .name {
-	grid-column: 1 / 3;
+	grid-column: 1 / 4;
 	grid-row: 1 / 3;
 	margin: 1rem 0 0 1rem;
 	padding: 0;
@@ -29,14 +29,14 @@ body {
 }
 
 .name h1 {
-	font-size: 2rem;
+	font-size: 3rem;
 	font-weight: 400;
 	margin: 0;
 	padding: 0;
 }
 
 .name p {
-	font-size: 1rem;
+	font-size: 1.5rem;
 	margin: 0.3rem 0 0 0;
 	padding: 0;
 }
@@ -80,4 +80,21 @@ body {
 
 .nav a:link {
 	color: white;
+}
+
+.text-container {
+	grid-column: 6 / 10;
+	grid-row: 5 / 11;
+	color: white;
+}
+
+.dynamic-div {
+	opacity: 0;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1px;
+	grid-auto-flow: row;
 }
