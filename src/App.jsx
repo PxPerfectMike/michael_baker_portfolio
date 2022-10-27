@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Game from './components/Game';
+import { arrOfObj } from './helpers';
 
 function App() {
-	const arrOfObj = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-		22, 23, 24, 25,
-	];
 	const pageElements = ['home', 'projects', 'info', 'contact', 'game'];
-	const [shownElement, setShownElement] = useState('');
+	const [shownElement, setShownElement] = useState(''); // this line is necessary do not delete it when cleaning up dev code
+	// the shown element window location hash and if statement below are for dev purposes only. It is to improve productivity by starting on the working component instead instead of the home page component.
 	if (shownElement === '') {
 		setShownElement(pageElements[4]);
 		window.location.hash = 'welcome_to_my_portfolio!_I_hope_you_love_it!';
