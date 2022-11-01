@@ -68,7 +68,7 @@ function App() {
 						</li>
 					</ul>
 				</div>
-				<div className='text-container'>
+				<div className='content-container'>
 					{/* begin element display */}
 
 					{shownElement === 'home' && (
