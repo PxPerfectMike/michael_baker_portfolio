@@ -5,7 +5,7 @@
 }
 
 body {
-	background-color: black;
+	background-color: #070606;
 }
 
 .App {
@@ -15,7 +15,7 @@ body {
 	grid-template-columns: repeat(13, 1fr);
 	grid-template-rows: repeat(11, 1fr);
 	overflow: hidden;
-	outline: 1px solid white;
+	outline: 1px solid #f0f1f1;
 	outline-offset: 10px;
 }
 
@@ -84,7 +84,7 @@ body {
 
 .text-container {
 	grid-column: 6 / 10;
-	grid-row: 5 / 11;
+	grid-row: 3 / 11;
 	color: white;
 }
 
@@ -95,6 +95,25 @@ body {
 .container {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 1px;
-	grid-auto-flow: row;
+	grid-template-rows: repeat(5, 1fr);
+	gap: 0.6rem;
+}
+
+.game-item {
+	width: 5vw;
+	height: 5vw;
+	border-radius: 50%;
+	text-align: center;
+}
+.game-item0 {
+	background-color: #00a4ff;
+}
+.game-item1 {
+	background-color: #00ff5b;
+}
+.game-item2 {
+	background-color: #5b00ff;
+}
+.game-item3 {
+	background-color: #ff5b00;
 }

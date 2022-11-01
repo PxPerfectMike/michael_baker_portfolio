@@ -148,7 +148,7 @@ function App() {
 								damping: 20,
 							}}
 						>
-							<Game arrOfObj={arrOfObj} />
+							<Game />
 							<h2>Here is a game I made</h2>
 							<p>
 								Here is a game I made. It is a simple game where you have to
