@@ -35,9 +35,8 @@ function Game() {
 	const [winPercentage, setWinPercentage] = useState(0);
 
 	let winState = [
-		0, 1, 0, 3, 0, 1, 1, 1, 3, 2, 1, 2, 2, 2, 1, 0, 3, 1, 3, 0, 1, 2, 1, 3, 2,
+		0, 1, 2, 3, 0, 1, 1, 1, 3, 2, 1, 2, 2, 2, 1, 0, 3, 1, 3, 0, 1, 2, 1, 3, 2,
 	];
-	console.log(winPercentage);
 
 	let gameArray = [
 		gameObj0,
@@ -67,8 +66,17 @@ function Game() {
 		gameObj24,
 	];
 
+	function checkWinPercentage() {
+		let per = 0;
+		for (let i = 0; i < gameArray.length; i++) {
+			if (gameArray[i] === winState[i]) {
+				per++;
+			}
+		}
+		setWinPercentage((per / 25) * 100);
+	}
+
 	function handleClick0() {
-		let lockedBool = false;
 		switch (gameArray[0]) {
 			case 0:
 				setGameObj0(gameObj0 + 1);
@@ -82,13 +90,6 @@ function Game() {
 			case 3:
 				setGameObj0(0);
 				break;
-		}
-		if (gameObj0 === winState[0]) {
-			lockedBool = true;
-			setWinPercentage(winPercentage + 1);
-		} else if (gameObj0 !== winState[0] && lockedBool === true) {
-			lockedBool = false;
-			setWinPercentage(winPercentage - 1);
 		}
 	}
 
@@ -502,6 +503,8 @@ function Game() {
 
 	return (
 		<>
+			<button onClick={checkWinPercentage}>Check Win Percentage</button>
+			<p>{winPercentage}</p>
 			<div className='container'>
 				{gameArray[0] == 0 && (
 					<div
