@@ -1,3 +1,8 @@
+:root {
+	--game-item-size: calc(14vw / 3);
+	--game-border-radius: calc(var(--game-item-size) / 2);
+}
+
 * {
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
@@ -107,7 +112,7 @@ body {
 	height: 30vw;
 	outline: 2px solid white;
 	outline-offset: 10px;
-	border-radius: 42px;
+	border-radius: var(--game-border-radius);
 	box-shadow: inset 0 0 100px 5px #f0f1f1;
 	background-color: #070606;
 }
@@ -115,12 +120,12 @@ body {
 .game-item {
 	justify-self: center;
 	align-self: center;
-	width: 5vw;
-	height: 5vw;
-	border-radius: 50%;
-	text-align: center;
-	border: 1rem solid transparent;
+	width: var(--game-item-size);
+	height: var(--game-item-size);
+	border-radius: 3rem;
+	resize: both;
 }
+
 .game-item0 {
 	background-color: #00a4ff;
 }
@@ -133,3 +138,20 @@ body {
 .game-item3 {
 	background-color: #ff5b00;
 }
+.game-item4 {
+	background-color: #fff8f8;
+	border: 1px solid #f0f1f1;
+}
+
+.game-item4:hover {
+	border: 1px solid #d3d3d3;
+	cursor: grab;
+}
+
+.game-item4:active {
+	border: 1px solid #1d9335;
+	cursor: grabbing;
+}
+
+/* @media screen and {
+} */

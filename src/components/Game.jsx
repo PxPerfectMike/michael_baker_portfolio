@@ -1,46 +1,42 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useDragControls } from 'framer-motion';
 
 function Game() {
-	const motionProps = {
-		initial: { scale: 0 },
-		animate: { scale: 1 },
-		transition: { type: 'spring', stiffness: 260, damping: 20 },
-	};
+	const initState = [0, 1, 2, 3];
 
-	function randomNum() {
-		return Math.floor(Math.random() * 4);
-	}
-	const [gameObj0, setGameObj0] = useState(3);
-	const [gameObj1, setGameobj1] = useState(2);
-	const [gameObj2, setGameobj2] = useState(1);
-	const [gameObj3, setGameobj3] = useState(2);
-	const [gameObj4, setGameobj4] = useState(3);
-	const [gameObj5, setGameobj5] = useState(2);
-	const [gameObj6, setGameobj6] = useState(1);
-	const [gameObj7, setGameobj7] = useState(3);
-	const [gameObj8, setGameobj8] = useState(1);
-	const [gameObj9, setGameobj9] = useState(2);
-	const [gameObj10, setGameobj10] = useState(3);
-	const [gameObj11, setGameobj11] = useState(1);
-	const [gameObj12, setGameobj12] = useState(2);
-	const [gameObj13, setGameobj13] = useState(1);
-	const [gameObj14, setGameobj14] = useState(3);
-	const [gameObj15, setGameobj15] = useState(2);
-	const [gameObj16, setGameobj16] = useState(1);
-	const [gameObj17, setGameobj17] = useState(3);
-	const [gameObj18, setGameobj18] = useState(1);
-	const [gameObj19, setGameobj19] = useState(2);
-	const [gameObj20, setGameobj20] = useState(3);
-	const [gameObj21, setGameobj21] = useState(2);
-	const [gameObj22, setGameobj22] = useState(1);
-	const [gameObj23, setGameobj23] = useState(2);
-	const [gameObj24, setGameobj24] = useState(3);
+	const controls = useDragControls();
+
+	const [gameObj0, setGameObj0] = useState(initState[0]);
+	const [gameObj1, setGameobj1] = useState(initState[0]);
+	const [gameObj2, setGameobj2] = useState(initState[0]);
+	const [gameObj3, setGameobj3] = useState(initState[0]);
+	const [gameObj4, setGameobj4] = useState(initState[0]);
+	const [gameObj5, setGameobj5] = useState(initState[0]);
+	const [gameObj6, setGameobj6] = useState(initState[0]);
+	const [gameObj7, setGameobj7] = useState(initState[0]);
+	const [gameObj8, setGameobj8] = useState(initState[0]);
+	const [gameObj9, setGameobj9] = useState(initState[0]);
+	const [gameObj10, setGameobj10] = useState(initState[0]);
+	const [gameObj11, setGameobj11] = useState(initState[0]);
+	const [gameObj12, setGameobj12] = useState(initState[0]);
+	const [gameObj13, setGameobj13] = useState(initState[0]);
+	const [gameObj14, setGameobj14] = useState(initState[0]);
+	const [gameObj15, setGameobj15] = useState(initState[0]);
+	const [gameObj16, setGameobj16] = useState(initState[0]);
+	const [gameObj17, setGameobj17] = useState(initState[0]);
+	const [gameObj18, setGameobj18] = useState(initState[0]);
+	const [gameObj19, setGameobj19] = useState(initState[0]);
+	const [gameObj20, setGameobj20] = useState(initState[0]);
+	const [gameObj21, setGameobj21] = useState(initState[0]);
+	const [gameObj22, setGameobj22] = useState(initState[0]);
+	const [gameObj23, setGameobj23] = useState(initState[0]);
+	const [gameObj24, setGameobj24] = useState(initState[0]);
 
 	const [winPercentage, setWinPercentage] = useState(0);
 
 	let winState = [
-		0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 2, 1, 2, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0,
+		[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 3, 2, 3, 0, 0, 2, 1, 2, 0, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0],
 	];
 
 	let gameArray = [
@@ -99,15 +95,53 @@ function Game() {
 		setGameobj24,
 	];
 
+	// get the x, y position of the middle game-item
+	const middleRef = useRef();
+
+	const [xx, setX] = useState();
+	const [yy, setY] = useState();
+
+	const getPosition = () => {
+		const x = middleRef.current.offsetLeft;
+		setX(x);
+
+		const y = middleRef.current.offsetTop;
+		setY(y);
+
+		console.log(x, y);
+	};
+
+	useEffect(() => {
+		getPosition();
+	}, []);
+
+	useEffect(() => {
+		window.addEventListener('resize', getPosition);
+	}, []);
+
+	function handleDrag() {
+		console.log(xx, yy);
+	}
+	// --------------------------------------------------------------
+
 	function checkWinPercentage() {
 		let per = 0;
 		for (let i = 0; i < gameArray.length; i++) {
-			if (gameArray[i] === winState[i]) {
+			if (gameArray[i] === winState[0][i]) {
 				per++;
 			}
 		}
 		setWinPercentage((per / 25) * 100);
+		if (per === 25) {
+			for (let i = 0; i < setterArray.length; i++) {
+				setterArray[i](4);
+			}
+		}
 	}
+
+	useEffect(() => {
+		checkWinPercentage();
+	}, [gameArray]);
 
 	function changeLogic1() {
 		for (let i = 0; i < gameArray.length; i++) {
@@ -132,6 +166,28 @@ function Game() {
 			}
 		}
 	}
+	const motionProps = {
+		initial: { scale: 0 },
+		animate: { scale: 1 },
+		transition: { type: 'spring', stiffness: 260, damping: 20 },
+	};
+
+	const winProps = {
+		initial: { scale: 0 },
+		animate: { backgroundColor: 'rgba(0,0,0,0)' },
+		transition: { ease: 'linear' },
+		// [0.6, 0.01, -0.05, 0.9]
+	};
+
+	const winPropsCoin = {
+		initial: { scale: 1 },
+		animate: {
+			scale: 3,
+			background:
+				'radial-gradient(circle at center, rgb(255,215,11), rgb(218,165,32) 100%)',
+		},
+		transition: { ease: 'easeOut', duration: 0.6 },
+	};
 
 	function handleClick0() {
 		switch (gameArray[0]) {
@@ -219,8 +275,8 @@ function Game() {
 				setGameobj4(gameObj4 + 1);
 				break;
 			case 1:
-				setGameobj4(gameObj4 - 1);
 				changeLogic1();
+				setGameobj4(gameObj4 - 1);
 				break;
 			case 2:
 				changeLogic2();
@@ -638,7 +694,6 @@ function Game() {
 			<div className='container'>
 				{gameArray[0] == 0 && (
 					<motion.div
-						id='a0'
 						className='game-item0 game-item'
 						onClick={handleClick0}
 						initial={motionProps.initial}
@@ -648,7 +703,6 @@ function Game() {
 				)}
 				{gameArray[0] == 1 && (
 					<motion.div
-						id='a1'
 						className='game-item1 game-item'
 						onClick={handleClick0}
 						initial={motionProps.initial}
@@ -658,7 +712,6 @@ function Game() {
 				)}
 				{gameArray[0] == 2 && (
 					<motion.div
-						id='a2'
 						className='game-item2 game-item'
 						onClick={handleClick0}
 						initial={motionProps.initial}
@@ -668,7 +721,6 @@ function Game() {
 				)}
 				{gameArray[0] == 3 && (
 					<motion.div
-						id='a3'
 						className='game-item3 game-item'
 						onClick={handleClick0}
 						initial={motionProps.initial}
@@ -676,10 +728,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[0] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[1] == 0 && (
 					<motion.div
-						id='b0'
 						className='game-item0 game-item'
 						onClick={handleClick1}
 						initial={motionProps.initial}
@@ -689,7 +748,6 @@ function Game() {
 				)}
 				{gameArray[1] == 1 && (
 					<motion.div
-						id='b1'
 						className='game-item1 game-item'
 						onClick={handleClick1}
 						initial={motionProps.initial}
@@ -699,7 +757,6 @@ function Game() {
 				)}
 				{gameArray[1] == 2 && (
 					<motion.div
-						id='b2'
 						className='game-item2 game-item'
 						onClick={handleClick1}
 						initial={motionProps.initial}
@@ -709,7 +766,6 @@ function Game() {
 				)}
 				{gameArray[1] == 3 && (
 					<motion.div
-						id='b3'
 						className='game-item3 game-item'
 						onClick={handleClick1}
 						initial={motionProps.initial}
@@ -717,10 +773,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[1] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[2] == 0 && (
 					<motion.div
-						id='c0'
 						className='game-item0 game-item'
 						onClick={handleClick2}
 						initial={motionProps.initial}
@@ -730,7 +793,6 @@ function Game() {
 				)}
 				{gameArray[2] == 1 && (
 					<motion.div
-						id='c1'
 						className='game-item1 game-item'
 						onClick={handleClick2}
 						initial={motionProps.initial}
@@ -741,7 +803,6 @@ function Game() {
 
 				{gameArray[2] == 2 && (
 					<motion.div
-						id='c2'
 						className='game-item2 game-item'
 						onClick={handleClick2}
 						initial={motionProps.initial}
@@ -751,7 +812,6 @@ function Game() {
 				)}
 				{gameArray[2] == 3 && (
 					<motion.div
-						id='c3'
 						className='game-item3 game-item'
 						onClick={handleClick2}
 						initial={motionProps.initial}
@@ -759,10 +819,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[2] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[3] == 0 && (
 					<motion.div
-						id='d0'
 						className='game-item0 game-item'
 						onClick={handleClick3}
 						initial={motionProps.initial}
@@ -772,7 +839,6 @@ function Game() {
 				)}
 				{gameArray[3] == 1 && (
 					<motion.div
-						id='d1'
 						className='game-item1 game-item'
 						onClick={handleClick3}
 						initial={motionProps.initial}
@@ -783,7 +849,6 @@ function Game() {
 
 				{gameArray[3] == 2 && (
 					<motion.div
-						id='d2'
 						className='game-item2 game-item'
 						onClick={handleClick3}
 						initial={motionProps.initial}
@@ -793,7 +858,6 @@ function Game() {
 				)}
 				{gameArray[3] == 3 && (
 					<motion.div
-						id='d3'
 						className='game-item3 game-item'
 						onClick={handleClick3}
 						initial={motionProps.initial}
@@ -801,10 +865,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[3] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[4] == 0 && (
 					<motion.div
-						id='e0'
 						className='game-item0 game-item'
 						onClick={handleClick4}
 						initial={motionProps.initial}
@@ -814,7 +885,6 @@ function Game() {
 				)}
 				{gameArray[4] == 1 && (
 					<motion.div
-						id='e1'
 						className='game-item1 game-item'
 						onClick={handleClick4}
 						initial={motionProps.initial}
@@ -825,7 +895,6 @@ function Game() {
 
 				{gameArray[4] == 2 && (
 					<motion.div
-						id='e2'
 						className='game-item2 game-item'
 						onClick={handleClick4}
 						initial={motionProps.initial}
@@ -835,7 +904,6 @@ function Game() {
 				)}
 				{gameArray[4] == 3 && (
 					<motion.div
-						id='e3'
 						className='game-item3 game-item'
 						onClick={handleClick4}
 						initial={motionProps.initial}
@@ -843,10 +911,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[4] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[5] == 0 && (
 					<motion.div
-						id='f0'
 						className='game-item0 game-item'
 						onClick={handleClick5}
 						initial={motionProps.initial}
@@ -856,7 +931,6 @@ function Game() {
 				)}
 				{gameArray[5] == 1 && (
 					<motion.div
-						id='f1'
 						className='game-item1 game-item'
 						onClick={handleClick5}
 						initial={motionProps.initial}
@@ -867,7 +941,6 @@ function Game() {
 
 				{gameArray[5] == 2 && (
 					<motion.div
-						id='f2'
 						className='game-item2 game-item'
 						onClick={handleClick5}
 						initial={motionProps.initial}
@@ -877,7 +950,6 @@ function Game() {
 				)}
 				{gameArray[5] == 3 && (
 					<motion.div
-						id='f3'
 						className='game-item3 game-item'
 						onClick={handleClick5}
 						initial={motionProps.initial}
@@ -885,10 +957,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[5] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[6] == 0 && (
 					<motion.div
-						id='g0'
 						className='game-item0 game-item'
 						onClick={handleClick6}
 						initial={motionProps.initial}
@@ -898,7 +977,6 @@ function Game() {
 				)}
 				{gameArray[6] == 1 && (
 					<motion.div
-						id='g1'
 						className='game-item1 game-item'
 						onClick={handleClick6}
 						initial={motionProps.initial}
@@ -909,7 +987,6 @@ function Game() {
 
 				{gameArray[6] == 2 && (
 					<motion.div
-						id='g2'
 						className='game-item2 game-item'
 						onClick={handleClick6}
 						initial={motionProps.initial}
@@ -919,7 +996,6 @@ function Game() {
 				)}
 				{gameArray[6] == 3 && (
 					<motion.div
-						id='g3'
 						className='game-item3 game-item'
 						onClick={handleClick6}
 						initial={motionProps.initial}
@@ -927,10 +1003,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[6] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[7] == 0 && (
 					<motion.div
-						id='h0'
 						className='game-item0 game-item'
 						onClick={handleClick7}
 						initial={motionProps.initial}
@@ -940,7 +1023,6 @@ function Game() {
 				)}
 				{gameArray[7] == 1 && (
 					<motion.div
-						id='h1'
 						className='game-item1 game-item'
 						onClick={handleClick7}
 						initial={motionProps.initial}
@@ -951,7 +1033,6 @@ function Game() {
 
 				{gameArray[7] == 2 && (
 					<motion.div
-						id='h2'
 						className='game-item2 game-item'
 						onClick={handleClick7}
 						initial={motionProps.initial}
@@ -961,7 +1042,6 @@ function Game() {
 				)}
 				{gameArray[7] == 3 && (
 					<motion.div
-						id='h3'
 						className='game-item3 game-item'
 						onClick={handleClick7}
 						initial={motionProps.initial}
@@ -969,10 +1049,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[7] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[8] == 0 && (
 					<motion.div
-						id='i0'
 						className='game-item0 game-item'
 						onClick={handleClick8}
 						initial={motionProps.initial}
@@ -982,7 +1069,6 @@ function Game() {
 				)}
 				{gameArray[8] == 1 && (
 					<motion.div
-						id='i1'
 						className='game-item1 game-item'
 						onClick={handleClick8}
 						initial={motionProps.initial}
@@ -993,7 +1079,6 @@ function Game() {
 
 				{gameArray[8] == 2 && (
 					<motion.div
-						id='i2'
 						className='game-item2 game-item'
 						onClick={handleClick8}
 						initial={motionProps.initial}
@@ -1003,7 +1088,6 @@ function Game() {
 				)}
 				{gameArray[8] == 3 && (
 					<motion.div
-						id='i3'
 						className='game-item3 game-item'
 						onClick={handleClick8}
 						initial={motionProps.initial}
@@ -1011,10 +1095,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[8] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[9] == 0 && (
 					<motion.div
-						id='j0'
 						className='game-item0 game-item'
 						onClick={handleClick9}
 						initial={motionProps.initial}
@@ -1024,7 +1115,6 @@ function Game() {
 				)}
 				{gameArray[9] == 1 && (
 					<motion.div
-						id='j1'
 						className='game-item1 game-item'
 						onClick={handleClick9}
 						initial={motionProps.initial}
@@ -1035,7 +1125,6 @@ function Game() {
 
 				{gameArray[9] == 2 && (
 					<motion.div
-						id='j2'
 						className='game-item2 game-item'
 						onClick={handleClick9}
 						initial={motionProps.initial}
@@ -1045,7 +1134,6 @@ function Game() {
 				)}
 				{gameArray[9] == 3 && (
 					<motion.div
-						id='j3'
 						className='game-item3 game-item'
 						onClick={handleClick9}
 						initial={motionProps.initial}
@@ -1053,10 +1141,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[9] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[10] == 0 && (
 					<motion.div
-						id='k0'
 						className='game-item0 game-item'
 						onClick={handleClick10}
 						initial={motionProps.initial}
@@ -1066,7 +1161,6 @@ function Game() {
 				)}
 				{gameArray[10] == 1 && (
 					<motion.div
-						id='k1'
 						className='game-item1 game-item'
 						onClick={handleClick10}
 						initial={motionProps.initial}
@@ -1077,7 +1171,6 @@ function Game() {
 
 				{gameArray[10] == 2 && (
 					<motion.div
-						id='k2'
 						className='game-item2 game-item'
 						onClick={handleClick10}
 						initial={motionProps.initial}
@@ -1087,7 +1180,6 @@ function Game() {
 				)}
 				{gameArray[10] == 3 && (
 					<motion.div
-						id='k3'
 						className='game-item3 game-item'
 						onClick={handleClick10}
 						initial={motionProps.initial}
@@ -1095,10 +1187,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[10] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[11] == 0 && (
 					<motion.div
-						id='l0'
 						className='game-item0 game-item'
 						onClick={handleClick11}
 						initial={motionProps.initial}
@@ -1108,7 +1207,6 @@ function Game() {
 				)}
 				{gameArray[11] == 1 && (
 					<motion.div
-						id='l1'
 						className='game-item1 game-item'
 						onClick={handleClick11}
 						initial={motionProps.initial}
@@ -1119,7 +1217,6 @@ function Game() {
 
 				{gameArray[11] == 2 && (
 					<motion.div
-						id='l2'
 						className='game-item2 game-item'
 						onClick={handleClick11}
 						initial={motionProps.initial}
@@ -1129,7 +1226,6 @@ function Game() {
 				)}
 				{gameArray[11] == 3 && (
 					<motion.div
-						id='l3'
 						className='game-item3 game-item'
 						onClick={handleClick11}
 						initial={motionProps.initial}
@@ -1137,10 +1233,18 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[11] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[12] == 0 && (
 					<motion.div
-						id='m0'
+						ref={middleRef}
 						className='game-item0 game-item'
 						onClick={handleClick12}
 						initial={motionProps.initial}
@@ -1150,7 +1254,7 @@ function Game() {
 				)}
 				{gameArray[12] == 1 && (
 					<motion.div
-						id='m1'
+						ref={middleRef}
 						className='game-item1 game-item'
 						onClick={handleClick12}
 						initial={motionProps.initial}
@@ -1161,7 +1265,7 @@ function Game() {
 
 				{gameArray[12] == 2 && (
 					<motion.div
-						id='m2'
+						ref={middleRef}
 						className='game-item2 game-item'
 						onClick={handleClick12}
 						initial={motionProps.initial}
@@ -1171,7 +1275,7 @@ function Game() {
 				)}
 				{gameArray[12] == 3 && (
 					<motion.div
-						id='m3'
+						ref={middleRef}
 						className='game-item3 game-item'
 						onClick={handleClick12}
 						initial={motionProps.initial}
@@ -1179,10 +1283,20 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[12] == 4 && (
+					<motion.div
+						ref={middleRef}
+						className='game-item4 game-item'
+						initial={winPropsCoin.initial}
+						animate={winPropsCoin.animate}
+						transition={winPropsCoin.transition}
+						drag='x'
+						dragControls={controls}
+					></motion.div>
+				)}
 
 				{gameArray[13] == 0 && (
 					<motion.div
-						id='n0'
 						className='game-item0 game-item'
 						onClick={handleClick13}
 						initial={motionProps.initial}
@@ -1192,7 +1306,6 @@ function Game() {
 				)}
 				{gameArray[13] == 1 && (
 					<motion.div
-						id='n1'
 						className='game-item1 game-item'
 						onClick={handleClick13}
 						initial={motionProps.initial}
@@ -1203,7 +1316,6 @@ function Game() {
 
 				{gameArray[13] == 2 && (
 					<motion.div
-						id='n2'
 						className='game-item2 game-item'
 						onClick={handleClick13}
 						initial={motionProps.initial}
@@ -1213,7 +1325,7 @@ function Game() {
 				)}
 				{gameArray[13] == 3 && (
 					<motion.div
-						id='n3'
+						ref={middleRef}
 						className='game-item3 game-item'
 						onClick={handleClick13}
 						initial={motionProps.initial}
@@ -1221,10 +1333,18 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[13] == 4 && (
+					<motion.div
+						id='centerGameObj'
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[14] == 0 && (
 					<motion.div
-						id='o0'
 						className='game-item0 game-item'
 						onClick={handleClick14}
 						initial={motionProps.initial}
@@ -1234,7 +1354,6 @@ function Game() {
 				)}
 				{gameArray[14] == 1 && (
 					<motion.div
-						id='o1'
 						className='game-item1 game-item'
 						onClick={handleClick14}
 						initial={motionProps.initial}
@@ -1245,7 +1364,6 @@ function Game() {
 
 				{gameArray[14] == 2 && (
 					<motion.div
-						id='o2'
 						className='game-item2 game-item'
 						onClick={handleClick14}
 						initial={motionProps.initial}
@@ -1255,7 +1373,6 @@ function Game() {
 				)}
 				{gameArray[14] == 3 && (
 					<motion.div
-						id='o3'
 						className='game-item3 game-item'
 						onClick={handleClick14}
 						initial={motionProps.initial}
@@ -1263,10 +1380,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[14] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[15] == 0 && (
 					<motion.div
-						id='p0'
 						className='game-item0 game-item'
 						onClick={handleClick15}
 						initial={motionProps.initial}
@@ -1276,7 +1400,6 @@ function Game() {
 				)}
 				{gameArray[15] == 1 && (
 					<motion.div
-						id='p1'
 						className='game-item1 game-item'
 						onClick={handleClick15}
 						initial={motionProps.initial}
@@ -1287,7 +1410,6 @@ function Game() {
 
 				{gameArray[15] == 2 && (
 					<motion.div
-						id='p2'
 						className='game-item2 game-item'
 						onClick={handleClick15}
 						initial={motionProps.initial}
@@ -1297,7 +1419,6 @@ function Game() {
 				)}
 				{gameArray[15] == 3 && (
 					<motion.div
-						id='p3'
 						className='game-item3 game-item'
 						onClick={handleClick15}
 						initial={motionProps.initial}
@@ -1305,10 +1426,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[15] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[16] == 0 && (
 					<motion.div
-						id='q0'
 						className='game-item0 game-item'
 						onClick={handleClick16}
 						initial={motionProps.initial}
@@ -1318,7 +1446,6 @@ function Game() {
 				)}
 				{gameArray[16] == 1 && (
 					<motion.div
-						id='q1'
 						className='game-item1 game-item'
 						onClick={handleClick16}
 						initial={motionProps.initial}
@@ -1329,7 +1456,6 @@ function Game() {
 
 				{gameArray[16] == 2 && (
 					<motion.div
-						id='q2'
 						className='game-item2 game-item'
 						onClick={handleClick16}
 						initial={motionProps.initial}
@@ -1339,7 +1465,6 @@ function Game() {
 				)}
 				{gameArray[16] == 3 && (
 					<motion.div
-						id='q3'
 						className='game-item3 game-item'
 						onClick={handleClick16}
 						initial={motionProps.initial}
@@ -1347,10 +1472,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[16] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[17] == 0 && (
 					<motion.div
-						id='r0'
 						className='game-item0 game-item'
 						onClick={handleClick17}
 						initial={motionProps.initial}
@@ -1360,7 +1492,6 @@ function Game() {
 				)}
 				{gameArray[17] == 1 && (
 					<motion.div
-						id='r1'
 						className='game-item1 game-item'
 						onClick={handleClick17}
 						initial={motionProps.initial}
@@ -1371,7 +1502,6 @@ function Game() {
 
 				{gameArray[17] == 2 && (
 					<motion.div
-						id='r2'
 						className='game-item2 game-item'
 						onClick={handleClick17}
 						initial={motionProps.initial}
@@ -1381,7 +1511,6 @@ function Game() {
 				)}
 				{gameArray[17] == 3 && (
 					<motion.div
-						id='r3'
 						className='game-item3 game-item'
 						onClick={handleClick17}
 						initial={motionProps.initial}
@@ -1389,10 +1518,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[17] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[18] == 0 && (
 					<motion.div
-						id='s0'
 						className='game-item0 game-item'
 						onClick={handleClick18}
 						initial={motionProps.initial}
@@ -1402,7 +1538,6 @@ function Game() {
 				)}
 				{gameArray[18] == 1 && (
 					<motion.div
-						id='s1'
 						className='game-item1 game-item'
 						onClick={handleClick18}
 						initial={motionProps.initial}
@@ -1413,7 +1548,6 @@ function Game() {
 
 				{gameArray[18] == 2 && (
 					<motion.div
-						id='s2'
 						className='game-item2 game-item'
 						onClick={handleClick18}
 						initial={motionProps.initial}
@@ -1423,7 +1557,6 @@ function Game() {
 				)}
 				{gameArray[18] == 3 && (
 					<motion.div
-						id='s3'
 						className='game-item3 game-item'
 						onClick={handleClick18}
 						initial={motionProps.initial}
@@ -1431,10 +1564,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[18] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[19] == 0 && (
 					<motion.div
-						id='t0'
 						className='game-item0 game-item'
 						onClick={handleClick19}
 						initial={motionProps.initial}
@@ -1444,7 +1584,6 @@ function Game() {
 				)}
 				{gameArray[19] == 1 && (
 					<motion.div
-						id='t1'
 						className='game-item1 game-item'
 						onClick={handleClick19}
 						initial={motionProps.initial}
@@ -1455,7 +1594,6 @@ function Game() {
 
 				{gameArray[19] == 2 && (
 					<motion.div
-						id='t2'
 						className='game-item2 game-item'
 						onClick={handleClick19}
 						initial={motionProps.initial}
@@ -1465,7 +1603,6 @@ function Game() {
 				)}
 				{gameArray[19] == 3 && (
 					<motion.div
-						id='t3'
 						className='game-item3 game-item'
 						onClick={handleClick19}
 						initial={motionProps.initial}
@@ -1473,10 +1610,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[19] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[20] == 0 && (
 					<motion.div
-						id='u0'
 						className='game-item0 game-item'
 						onClick={handleClick20}
 						initial={motionProps.initial}
@@ -1486,7 +1630,6 @@ function Game() {
 				)}
 				{gameArray[20] == 1 && (
 					<motion.div
-						id='u1'
 						className='game-item1 game-item'
 						onClick={handleClick20}
 						initial={motionProps.initial}
@@ -1497,7 +1640,6 @@ function Game() {
 
 				{gameArray[20] == 2 && (
 					<motion.div
-						id='u2'
 						className='game-item2 game-item'
 						onClick={handleClick20}
 						initial={motionProps.initial}
@@ -1507,7 +1649,6 @@ function Game() {
 				)}
 				{gameArray[20] == 3 && (
 					<motion.div
-						id='u3'
 						className='game-item3 game-item'
 						onClick={handleClick20}
 						initial={motionProps.initial}
@@ -1515,10 +1656,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[20] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[21] == 0 && (
 					<motion.div
-						id='v0'
 						className='game-item0 game-item'
 						onClick={handleClick21}
 						initial={motionProps.initial}
@@ -1528,7 +1676,6 @@ function Game() {
 				)}
 				{gameArray[21] == 1 && (
 					<motion.div
-						id='v1'
 						className='game-item1 game-item'
 						onClick={handleClick21}
 						initial={motionProps.initial}
@@ -1539,7 +1686,6 @@ function Game() {
 
 				{gameArray[21] == 2 && (
 					<motion.div
-						id='v2'
 						className='game-item2 game-item'
 						onClick={handleClick21}
 						initial={motionProps.initial}
@@ -1549,7 +1695,6 @@ function Game() {
 				)}
 				{gameArray[21] == 3 && (
 					<motion.div
-						id='v3'
 						className='game-item3 game-item'
 						onClick={handleClick21}
 						initial={motionProps.initial}
@@ -1557,10 +1702,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[21] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[22] == 0 && (
 					<motion.div
-						id='w0'
 						className='game-item0 game-item'
 						onClick={handleClick22}
 						initial={motionProps.initial}
@@ -1570,7 +1722,6 @@ function Game() {
 				)}
 				{gameArray[22] == 1 && (
 					<motion.div
-						id='w1'
 						className='game-item1 game-item'
 						onClick={handleClick22}
 						initial={motionProps.initial}
@@ -1581,7 +1732,6 @@ function Game() {
 
 				{gameArray[22] == 2 && (
 					<motion.div
-						id='w2'
 						className='game-item2 game-item'
 						onClick={handleClick22}
 						initial={motionProps.initial}
@@ -1591,7 +1741,6 @@ function Game() {
 				)}
 				{gameArray[22] == 3 && (
 					<motion.div
-						id='w3'
 						className='game-item3 game-item'
 						onClick={handleClick22}
 						initial={motionProps.initial}
@@ -1599,10 +1748,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[22] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[23] == 0 && (
 					<motion.div
-						id='x0'
 						className='game-item0 game-item'
 						onClick={handleClick23}
 						initial={motionProps.initial}
@@ -1612,7 +1768,6 @@ function Game() {
 				)}
 				{gameArray[23] == 1 && (
 					<motion.div
-						id='x1'
 						className='game-item1 game-item'
 						onClick={handleClick23}
 						initial={motionProps.initial}
@@ -1623,7 +1778,6 @@ function Game() {
 
 				{gameArray[23] == 2 && (
 					<motion.div
-						id='x2'
 						className='game-item2 game-item'
 						onClick={handleClick23}
 						initial={motionProps.initial}
@@ -1633,7 +1787,6 @@ function Game() {
 				)}
 				{gameArray[23] == 3 && (
 					<motion.div
-						id='x3'
 						className='game-item3 game-item'
 						onClick={handleClick23}
 						initial={motionProps.initial}
@@ -1641,10 +1794,17 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[23] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 
 				{gameArray[24] == 0 && (
 					<motion.div
-						id='y0'
 						className='game-item0 game-item'
 						onClick={handleClick24}
 						initial={motionProps.initial}
@@ -1654,7 +1814,6 @@ function Game() {
 				)}
 				{gameArray[24] == 1 && (
 					<motion.div
-						id='y1'
 						className='game-item1 game-item'
 						onClick={handleClick24}
 						initial={motionProps.initial}
@@ -1665,7 +1824,6 @@ function Game() {
 
 				{gameArray[24] == 2 && (
 					<motion.div
-						id='y2'
 						className='game-item2 game-item'
 						onClick={handleClick24}
 						initial={motionProps.initial}
@@ -1675,7 +1833,6 @@ function Game() {
 				)}
 				{gameArray[24] == 3 && (
 					<motion.div
-						id='y3'
 						className='game-item3 game-item'
 						onClick={handleClick24}
 						initial={motionProps.initial}
@@ -1683,7 +1840,16 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
+				{gameArray[24] == 4 && (
+					<motion.div
+						className='game-item4 game-item'
+						initial={winProps.initial}
+						animate={winProps.animate}
+						transition={winProps.transition}
+					></motion.div>
+				)}
 			</div>
+			<p id='winPerc'>{winPercentage}</p>
 		</>
 	);
 }
