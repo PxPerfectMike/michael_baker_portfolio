@@ -1292,6 +1292,11 @@ function Game() {
 						transition={winPropsCoin.transition}
 						drag='x'
 						dragControls={controls}
+						onDrag={(e, info) => {
+							setX(info.point.x), setY(info.point.y);
+							console.log(xx);
+						}}
+						dragElastic={{ left: '0' }}
 					></motion.div>
 				)}
 
