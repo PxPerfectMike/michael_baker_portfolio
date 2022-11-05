@@ -166,6 +166,7 @@ function Game() {
 			}
 		}
 	}
+
 	const motionProps = {
 		initial: { scale: 0 },
 		animate: { scale: 1 },
@@ -176,7 +177,6 @@ function Game() {
 		initial: { scale: 0 },
 		animate: { backgroundColor: 'rgba(0,0,0,0)' },
 		transition: { ease: 'linear' },
-		// [0.6, 0.01, -0.05, 0.9]
 	};
 
 	const winPropsCoin = {
@@ -800,7 +800,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[2] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -846,7 +845,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[3] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -892,7 +890,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[4] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -938,7 +935,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[5] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -984,7 +980,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[6] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1030,7 +1025,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[7] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1076,7 +1070,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[8] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1122,7 +1115,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[9] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1168,7 +1160,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[10] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1214,7 +1205,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[11] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1262,7 +1252,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[12] == 2 && (
 					<motion.div
 						ref={middleRef}
@@ -1318,7 +1307,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[13] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1366,7 +1354,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[14] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1412,7 +1399,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[15] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1458,7 +1444,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[16] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1504,7 +1489,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[17] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1550,7 +1534,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[18] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1596,7 +1579,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[19] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1642,7 +1624,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[20] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1688,7 +1669,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[21] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1734,7 +1714,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[22] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1780,7 +1759,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[23] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
@@ -1826,7 +1804,6 @@ function Game() {
 						transition={motionProps.transition}
 					></motion.div>
 				)}
-
 				{gameArray[24] == 2 && (
 					<motion.div
 						className='game-item2 game-item'
