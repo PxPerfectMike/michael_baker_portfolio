@@ -153,5 +153,19 @@ body {
 	cursor: grabbing;
 }
 
+.coin {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.winPerc {
+	text-align: center;
+	font-size: 1.5rem;
+	margin: 1rem;
+}
+
 /* @media screen and {
 } */

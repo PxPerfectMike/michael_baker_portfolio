@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Game from './components/Game';
 
@@ -7,7 +7,7 @@ function App() {
 	const [shownElement, setShownElement] = useState(''); // this line is necessary do not delete it when cleaning up dev code
 	// the shown element window location hash and if statement below are for dev purposes only. It is to improve productivity by starting on the working component instead instead of the home page component.
 	if (shownElement === '') {
-		setShownElement(pageElements[2]);
+		setShownElement(pageElements[4]);
 		window.location.hash = 'welcome_to_my_portfolio!_I_hope_you_love_it!';
 	}
 
@@ -21,11 +21,7 @@ function App() {
 				<div className='nav'>
 					<ul>
 						<li>
-							<a
-								id='home-nav'
-								href='#'
-								onClick={() => setShownElement('home')}
-							>
+							<a id='home-nav' href='#' onClick={() => setShownElement('home')}>
 								Home
 							</a>
 						</li>
@@ -39,11 +35,7 @@ function App() {
 							</a>{' '}
 						</li>
 						<li>
-							<a
-								id='info-nav'
-								href='#'
-								onClick={() => setShownElement('info')}
-							>
+							<a id='info-nav' href='#' onClick={() => setShownElement('info')}>
 								Info
 							</a>
 						</li>
@@ -57,11 +49,7 @@ function App() {
 							</a>
 						</li>
 						<li>
-							<a
-								id='game'
-								href='#'
-								onClick={() => setShownElement('game')}
-							>
+							<a id='game' href='#' onClick={() => setShownElement('game')}>
 								Game
 							</a>
 						</li>

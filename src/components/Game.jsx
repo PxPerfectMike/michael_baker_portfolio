@@ -32,7 +32,9 @@ function Game() {
 	const [gameObj23, setGameobj23] = useState(initState[0]);
 	const [gameObj24, setGameobj24] = useState(initState[0]);
 
-	const [winPercentage, setWinPercentage] = useState(0);
+	const [winPercentage, setWinPercentage] = useState(100);
+	const [won, setWon] = useState(false);
+	const [per, setPer] = useState(0);
 
 	let winState = [
 		[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -98,44 +100,36 @@ function Game() {
 	// get the x, y position of the middle game-item
 	const middleRef = useRef();
 
-	const [xx, setX] = useState();
-	const [yy, setY] = useState();
-
 	const getPosition = () => {
 		const x = middleRef.current.offsetLeft;
-		setX(x);
 
 		const y = middleRef.current.offsetTop;
-		setY(y);
-
 		console.log(x, y);
+		return { x, y };
 	};
-
-	useEffect(() => {
-		getPosition();
-	}, []);
 
 	useEffect(() => {
 		window.addEventListener('resize', getPosition);
 	}, []);
 
-	function handleDrag() {
-		console.log(xx, yy);
-	}
-	// --------------------------------------------------------------
-
 	function checkWinPercentage() {
-		let per = 0;
+		let count = 0;
 		for (let i = 0; i < gameArray.length; i++) {
 			if (gameArray[i] === winState[0][i]) {
-				per++;
+				count++;
 			}
 		}
-		setWinPercentage((per / 25) * 100);
-		if (per === 25) {
-			for (let i = 0; i < setterArray.length; i++) {
-				setterArray[i](4);
-			}
+		setPer(count);
+		setWinPercentage(Math.floor((count / 25) * 100));
+		if (count === 25) {
+			setWon(true);
+			winSetter();
+		}
+	}
+
+	function winSetter() {
+		for (let i = 0; i < gameArray.length; i++) {
+			setterArray[i](4);
 		}
 	}
 
@@ -188,6 +182,16 @@ function Game() {
 		},
 		transition: { ease: 'easeOut', duration: 0.6 },
 	};
+
+	function handleDragEnd() {
+		for (let i = 0; i < gameArray.length; i++) {
+			if (gameArray[i] === 4) {
+				setterArray[i](Math.floor(Math.random() * 4));
+			}
+		}
+		console.log('restart');
+		setWon(false);
+	}
 
 	function handleClick0() {
 		switch (gameArray[0]) {
@@ -1275,18 +1279,16 @@ function Game() {
 				{gameArray[12] == 4 && (
 					<motion.div
 						ref={middleRef}
-						className='game-item4 game-item'
+						className='game-item4 game-item coin'
 						initial={winPropsCoin.initial}
 						animate={winPropsCoin.animate}
 						transition={winPropsCoin.transition}
 						drag='x'
 						dragControls={controls}
-						onDrag={(e, info) => {
-							setX(info.point.x), setY(info.point.y);
-							console.log(xx);
-						}}
-						dragElastic={{ left: '0' }}
-					></motion.div>
+						onViewportLeave={handleDragEnd}
+					>
+						YOU WIN!
+					</motion.div>
 				)}
 
 				{gameArray[13] == 0 && (
@@ -1831,7 +1833,18 @@ function Game() {
 					></motion.div>
 				)}
 			</div>
-			<p id='winPerc'>{winPercentage}</p>
+			<div id='winPerc' className='winPerc'>
+				{!won && (
+					<>
+						<p>You have not Won!{winPercentage}</p>
+					</>
+				)}
+				{won && (
+					<>
+						<p>You have Won!</p>
+					</>
+				)}
+			</div>
 		</>
 	);
 }
