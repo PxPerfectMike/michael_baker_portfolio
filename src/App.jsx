@@ -125,25 +125,28 @@ function App() {
 						</motion.div>
 					)}
 					{shownElement === 'game' && (
-						<motion.div
-							className='dynamic-div'
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{
-								type: 'spring',
-								stiffness: 50,
-								damping: 20,
-							}}
-						>
+						<>
 							<Game />
-							<h2>Here is a game I made</h2>
-							<p>
-								Here is a game I made. It is a simple game where you have to
-								click on the correct button. If you click on the wrong button,
-								you lose. If you click on the correct button, you win. You can
-								also click on the reset button to reset the game.
-							</p>
-						</motion.div>
+							<motion.div
+								className='dynamic-div'
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{
+									type: 'spring',
+									stiffness: 50,
+									damping: 20,
+								}}
+							>
+								<h2>Dot Logic</h2>
+								<p>
+									This is a game I made to both showcase my skills and as a
+									lesson in the basics of conditional rendering in React. The
+									game is a simple logic game where you have to figure out
+									carefully what moves to make to get the dots into a winning
+									configuration.
+								</p>
+							</motion.div>
+						</>
 					)}
 					{/* end element display */}
 				</div>

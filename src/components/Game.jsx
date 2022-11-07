@@ -1834,14 +1834,19 @@ function Game() {
 				)}
 			</div>
 			<div id='winPerc' className='winPerc'>
-				{!won && (
+				{!won && winPercentage != 0 && (
 					<>
-						<p>You have not Won!{winPercentage}</p>
+						<p>You have {winPercentage}% of the dots correct!</p>
+					</>
+				)}
+				{!won && winPercentage === 0 && (
+					<>
+						<p>Really.... 0% Correct?</p>
 					</>
 				)}
 				{won && (
 					<>
-						<p>You have Won!</p>
+						<p>100% Dots Correct! You Win!!</p>
 					</>
 				)}
 			</div>
